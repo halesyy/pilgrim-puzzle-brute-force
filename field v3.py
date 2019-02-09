@@ -5,39 +5,35 @@ from datetime import datetime
 startTime = datetime.now()
 
 def clear():
-    os.system('cls') #change to cls when on macosx or linux
+    if os.name == 'nt':
+        os.system('cls') #windows
+    else:
+        os.system('clear') #macos/linux
 clear()
 
+
+#// CONFIG VALUES
+keep_score_lessthan = -30
 field_size = 5
 field      = []
 points     = 0
-# operating_at = 20
 operating_at = 0
+human_control = False
+print_spam = False #only print when there is a value found that meets criteria
 
 for i in range(0, (field_size**2)):
     field.append("#")
-
-# field[0] = 'v'
-# field[5] = 'v'
-# field[10] = 'v'
-# field[15] = 'v'
 
 def restart_game():
     global field
     global operating_at
     global points
 
-    # operating_at = 20
     operating_at = 0
     points = 0
 
     for i in range(0, (field_size**2)):
         field[i] = '#'
-
-    # field[0] = 'v'
-    # field[5] = 'v'
-    # field[10] = 'v'
-    # field[15] = 'v'
 
 def print_field():
     global field
@@ -174,9 +170,13 @@ def print_pd(value):
 
 
 def decision(human=True):
+    global keep_score_lessthan
     global operating_at
     global points
-    print("pd:"+str(possible_decisions())+", p: "+str(points)+", oa: "+str(operating_at), end=" ")
+    global print_spam
+
+    if print_spam:
+        print("pd:"+str(possible_decisions())+", p: "+str(points)+", oa: "+str(operating_at), end=" ")
 
     if human:
         movement = input("\n: ")
@@ -220,7 +220,7 @@ def decision(human=True):
         operating_at = operating_at + value
         points = movement_points[movement]
         if operating_at == (field_size**2)-1:
-            if points <= -30:
+            if points <= keep_score_lessthan:
                 print("score of "+str(points)+" at game "+str(games)+" within "+str(datetime.now() - startTime))
                 scores_json = open("score.json", "r")
                 scores = json.load(scores_json)
@@ -249,13 +249,7 @@ while inf:
     game_running = True
     games = games + 1
     while game_running:
-        # clear()
-        # print_field()
-        game_running = decision(False)
-
-
-
-
-# choice_maker
-#
-# movement = input("\n: ")
+        if human_control:
+            clear()
+            print_field()
+        game_running = decision(human_control)
