@@ -1,0 +1,25 @@
+{
+    "scores": [
+        [
+            {
+                "assortment": "v####\nv####\nv####\nv####\n>>>>o",
+                "operating_at": 24,
+                "points": 4
+            }
+        ],
+        [
+            {
+                "assortment": "vv<<<\nvv##^\n>vv>^\nv<>^#\n>>>>o",
+                "operating_at": 24,
+                "points": -32.0
+            }
+        ],
+        [
+            {
+                "assortment": "vv<<<\nvv##^\n>vv>^\nv<>^#\n>>>>o",
+                "operating_at": 24,
+                "points": -32.0
+            }
+        ]
+    ]
+}
